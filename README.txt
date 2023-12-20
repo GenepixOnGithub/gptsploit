@@ -1,0 +1,111 @@
+# GPTsploit: Connexion d'un GPT personnalisé à Kali Linux
+
+## Aperçu
+GPTsploit est un outil de pentesting qui se connecte à Kali Linux via un serveur Flask. Il permet l'envoi de lignes de commande et l'interprétation des réponses, offrant une interface de type chat GPT entre l'utilisateur et Linux.
+
+## Fonctionnalités
+- **Interactions :** Dialoguez avec GPTsploit pour élaborer un scénario d'attaque et lui demander de l'exécuter.
+- **Interprétation des résultats :** Les résultats sont récupérés et analysés par GPT.
+- **Utilisation pratique :** Idéal pour des démonstrations techniques et l'apprentissage du pentesting.
+
+## Public Cible
+Cet outil est destiné aux utilisateurs possédant des connaissances en pentesting et en Kali Linux, et disposant d'un compte Chat GPT Plus. GPTsploit est particulièrement adapté aux professionnels et aux éducateurs en cybersécurité.
+
+## Installation
+
+### Installation de ngrok
+1. ngrok permet d'exposer votre serveur gptsploit.py sur Internet.
+2. Suivez la ligne de commande fournie par le site.
+3. Téléchargez et installez ngrok : [Guide d'installation pour Linux](lien_vers_le_guide)
+4. Authentifiez ngrok : [Page d'authentification](lien_vers_la_page)
+5. Créez un compte gratuit sur [www.ngrok.com](https://www.ngrok.com).
+6. Création du endpoint sur le site de ngrok :
+   - Accédez à l'onglet Cloud Edge > Domains > Create domain.
+   - Exécutez la commande : `ngrok http --domain=votre_domaine.ngrok-free.app 5000` (ajustez le port si nécessaire).
+
+## Installation des dépendances
+\```bash
+pip install Flask==3.0.0 pyfiglet==1.0.2 termcolor==2.4.0
+\```
+
+## Configuration du serveur gptsploit.py
+\```python
+Modifiez la clé d'API : API_KEY = os.environ.get("API_KEY", "VOTRE_MOT_DE_PASSE")
+\```
+
+## Lancement de GPTsploit
+\```bash
+sudo python gptsploit.py
+\```
+
+## Test du serveur avec curl
+Dans une nouvelle console, lancez :
+\```bash
+curl -X POST https://[votre_domaine].app/execute \
+     -H "Content-Type: application/json" \
+     -H "X-API-KEY: votre_api_key" \
+     -d '{"command": "ifconfig > [log_path]"}'
+\```
+
+Si l'exécution est réussie, gptsploit.py doit afficher des informations similaires à :
+\```plaintext
+127.0.0.1 - - [19/Dec/2023 20:19:41] "POST /execute HTTP/1.1" 202 -
+Exécution de la commande : ifconfig > logs/log_20231219_202109.txt
+\```
+et le résultat de ifconfig doit apparaître dans la console de curl.
+
+## Configuration de votre GPT sur l'interface web de Chat GPT Plus
+Accédez à https://chat.openai.com.
+Créez un GPT et nommez-le selon votre préférence.
+
+## Instructions
+Copiez et collez les informations suivantes dans la section "instructions". Vous pouvez les modifier selon vos besoins ou le style souhaité pour votre GPT :
+
+\```plaintext
+"Ce GPT fournit des réponses courtes, sauf indication contraire.
+
+GPTsploit est conçu pour interagir avec une console Kali Linux via un serveur Flask. Il envoie des commandes, reçoit et interprète les réponses. Cette documentation explique comment GPTsploit doit formuler et envoyer des commandes pour une exécution efficace.
+\```
+
+## Communication avec le Serveur Flask
+
+### Format des Commandes
+Utilisez la syntaxe exacte nécessaire pour une console Kali Linux.
+
+### Envoi des Commandes
+Les commandes sont envoyées via une requête POST à l'endpoint `/execute` du serveur Flask.
+Format de la requête : JSON avec un champ `command` contenant la commande à exécuter.
+
+### À FAIRE DE MANIÈRE SYSTÉMATIQUE
+Incluez `[log_path]` à l'endroit où le fichier de log doit être créé.
+`[log_path]` sera remplacé par le serveur Flask.
+Cela doit s'appliquer à toutes les commandes envoyées au serveur.
+
+### Exemples de Commandes
+\```bash
+ifconfig > [log_path] # pour obtenir l'adresse IP.
+wapiti -u http://example.com --module blindsql > [log_path]
+cat logs/log_20231217_122233.txt > [log_path]
+john --format=raw-sha1 --wordlist=wordlist.txt hash.txt > [log_path]
+\```
+
+### Traitement des Réponses
+Le serveur exécute la commande et crée un fichier de log.
+Le serveur répond avec le contenu du log ou un message indiquant que la commande est en cours.
+Le GPT s'exprime de manière courte et concise.
+
+## Actions
+Cliquez sur "Ajouter une nouvelle action".
+
+## Authentification
+### Type d'authentification : API Key
+- Api Key : Entrez votre api_key disponible dans le code de gptsploit.py
+### Type d'authentification : Custom
+- Nom de l'en-tête personnalisé : X-API-KEY
+
+## Schema
+Copiez et collez le contenu du fichier Schema OpenAPI.
+Complétez avec `"url": "votre_domaine_ngrok.app"`.
+
+## Test de votre GPT
+Votre GPT doit être capable d'exécuter et d'interpréter des commandes. Demandez au GPT de vous donner votre adresse IP.

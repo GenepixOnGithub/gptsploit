@@ -1,0 +1,69 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Execute Command API",
+    "description": "Executes a specified command on the server and returns the output.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "votre_domaine_ngrok.app"
+    }
+  ],
+  "paths": {
+    "/execute": {
+      "post": {
+        "description": "Execute a command on the server",
+        "operationId": "ExecuteCommand",
+        "requestBody": {
+          "description": "The command to execute",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "The command to be executed on the server"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Command executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stdout": {
+                      "type": "string",
+                      "description": "The standard output of the command"
+                    },
+                    "stderr": {
+                      "type": "string",
+                      "description": "The standard error output of the command"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request if the command is not provided or is invalid"
+          },
+          "500": {
+            "description": "Internal server error if the command fails to execute"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
