@@ -94,5 +94,3 @@ Complétez avec "url": "votre_domaine_ngrok.app".
 
 Test de votre GPT
 Votre GPT doit être capable d'exécuter et d'interpréter des commandes. Demandez au GPT de vous donner votre adresse IP.
-
-
