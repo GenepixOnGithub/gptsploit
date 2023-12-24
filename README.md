@@ -12,7 +12,7 @@ GPTsploit est un outil de pentesting qui se connecte à Kali Linux via un serveu
 Cet outil est destiné aux utilisateurs possédant des connaissances en pentesting et en Kali Linux, et disposant d'un compte Chat GPT Plus. GPTsploit est particulièrement adapté aux professionnels et aux éducateurs en cybersécurité.
 
 ### Installation
-
+ 
 ### Installation de ngrok
 ngrok permet d'exposer votre serveur gptsploit.py sur Internet.
 - Créez un compte gratuit sur www.ngrok.com.
@@ -27,8 +27,13 @@ Exécutez la commande : ngrok http --domain=votre_domaine.ngrok-free.app 5000 (P
 pip install Flask==3.0.0 pyfiglet==1.0.2 termcolor==2.4.0
 ```
 
+### Téléchargez le serveur depuis GitHub
+```
+git clone https://github.com/GenepixOnGithub/gptsploit.git
+```
+
 ### Configuration du serveur 
-Modifiez la clé d'API dans gptsploit.py
+Modifiez la clé d'API dans gptsploit.py. Il s'agit de la clé que vous communiquerez au GPT.
 ```
 API_KEY = os.environ.get("API_KEY", "VOTRE_MOT_DE_PASSE")
 ```
@@ -39,19 +44,25 @@ sudo python gptsploit.py
 ```
 
 ### Test du serveur avec curl
+Modifiez uniquement : 
+- [votre_domaine]
+- [votre_api_key]
 ```
 curl -X POST https://[votre_domaine].app/execute \
      -H "Content-Type: application/json" \
-     -H "X-API-KEY: votre_api_key" \
+     -H "X-API-KEY: [votre_api_key]" \
      -d '{"command": "ifconfig > [log_path]"}'
 ```
 
 Si l'exécution est réussie, gptsploit.py doit afficher des informations similaires à :
+
 ```
 127.0.0.1 - - [19/Dec/2023 20:19:41] "POST /execute HTTP/1.1" 202 -
 Exécution de la commande : ifconfig > logs/log_20231219_202109.txt
-et le résultat de ifconfig doit apparaître dans la console de curl.
 ```
+Le résultat de ifconfig doit apparaître dans la console de curl.
+
+** Il s'agit des instructions minimales pour faire fonctionner votre GPT. Vous pouvez lui apporter toutes les précisions que vous souhaitez (taille et style des réponses, commandes personnalisées, préférences des applications à utiliser...) **
 
 ## Configuration de votre GPT sur l'interface web de Chat GPT Plus
 Accédez à https://chat.openai.com.
@@ -91,10 +102,10 @@ Copiez et collez les informations suivantes dans la section "instructions". Vous
 Cliquez sur "Ajouter une nouvelle action".
 
 ### Authentification
-Type d'authentification : API Key
-Api Key : Entrez votre api_key disponible dans le code de gptsploit.py
-Type d'authentification : Custom
-Nom de l'en-tête personnalisé : X-API-KEY
+- Type d'authentification : API Key
+- Api Key : Entrez votre api_key disponible dans le code de gptsploit.py
+- Type d'authentification : Custom
+- Nom de l'en-tête personnalisé : X-API-KEY
 
 ### Schema
 Copiez et collez le contenu du fichier Schema OpenAPI.
@@ -102,5 +113,3 @@ Modifiez "url": "votre_domaine_ngrok.app".
 
 ### Test de votre GPT
 Votre GPT doit être capable d'exécuter et d'interpréter des commandes. Demandez au GPT de vous donner votre adresse IP.
-
-
