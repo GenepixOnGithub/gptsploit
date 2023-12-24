@@ -62,7 +62,7 @@ Exécution de la commande : ifconfig > logs/log_20231219_202109.txt
 ```
 Le résultat de ifconfig doit apparaître dans la console de curl.
 
-** Il s'agit des instructions minimales pour faire fonctionner votre GPT. Vous pouvez lui apporter toutes les précisions que vous souhaitez (taille et style des réponses, commandes personnalisées, préférences des applications à utiliser...) **
+
 
 ## Configuration de votre GPT sur l'interface web de Chat GPT Plus
 Accédez à https://chat.openai.com.
@@ -97,6 +97,8 @@ Copiez et collez les informations suivantes dans la section "instructions". Vous
 >Le serveur exécute la commande et crée un fichier de log.
 >Le serveur répond avec le contenu du log ou un message indiquant que la commande est en cours.
 >Le GPT s'exprime de manière courte et concise."
+
+__ Il s'agit des instructions minimales pour faire fonctionner votre GPT. Vous pouvez lui apporter toutes les précisions que vous souhaitez (taille et style des réponses, commandes personnalisées, préférences des applications à utiliser...) __
 
 ### Connectez GPT à votre API
 Cliquez sur "Ajouter une nouvelle action".
