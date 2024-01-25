@@ -1,14 +1,18 @@
-from flask import Flask, request, jsonify
-import subprocess
-import datetime
-import os
-import threading
-import time
-from pyfiglet import Figlet
-from termcolor import colored
-import sys
+# Created by github.com/Genepix
+# Last Modification by github.com/LincolnKermit
 
-API_KEY = os.environ.get("API_KEY", "g3n3p1x0nt1kt0k")
+try:
+    from flask import Flask, request, jsonify
+    import subprocess, datetime, os, threading, time, sys
+    from pyfiglet import Figlet
+    from termcolor import colored
+except ImportError as e:
+    print("Erreur lors de l'importation d'une librairie : ", e)
+    exit(1)
+    # Error message if error
+
+API_KEY = os.environ.get("API_KEY", "VOTRE_MOT_DE_PASSE")
+
 
 app = Flask(__name__)
 
@@ -21,7 +25,12 @@ def print_with_delay(message, delay=0.03):
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(delay)
-    print()  # New line after message
+    print()
+    
+if len(API_KEY) < 8:
+    print_with_delay(colored("API_KEY ou MOT DE PASSE INCORRECT", 'red'))
+    exit(1)
+# Check if user API_key or Pass is correct, min(8)
 
 def execute_command_in_thread(command, log_file_path):
     try:
@@ -63,4 +72,5 @@ def execute_command():
 if __name__ == '__main__':
 	print_banner('GPTSPLOIT')
 	print("By Genepix\n\n")
-	app.run(debug=True, host='0.0.0.0')
+	app.run(debug=True, host='0.0.0.0', port=1337)
+	# Use the host 0.0.0.0 for user with VPN/NAT, also use the port 1337 to be more accurate.
