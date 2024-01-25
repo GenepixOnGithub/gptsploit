@@ -70,4 +70,5 @@ def execute_command():
 if __name__ == '__main__':
 	print_banner('GPTSPLOIT')
 	print("By Genepix\n\n")
-	app.run(debug=True, host='0.0.0.0', port=1337)
+	app.run(debug=False, host='0.0.0.0', port=1337)
+    	# To not reload the page
