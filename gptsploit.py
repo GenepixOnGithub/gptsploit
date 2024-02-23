@@ -32,7 +32,6 @@ def execute_command_in_thread(command, log_file_path):
         print_with_delay(colored(f"Erreur lors de l'exécution de la commande : {e}", 'red'))
 
 @app.route('/execute', methods=['POST'])
-
 def execute_command():
     api_key = request.headers.get('X-API-KEY')
     if not api_key or api_key != API_KEY:
@@ -51,7 +50,7 @@ def execute_command():
     thread = threading.Thread(target=execute_command_in_thread, args=(command_with_log_path, log_file_path))
     thread.start()
 
-    time.sleep(4)
+    thread.join()  # Wait for the thread to finish before proceeding
 
     if os.path.exists(log_file_path) and os.path.getsize(log_file_path) > 0:
         with open(log_file_path, 'r') as file:
@@ -61,6 +60,6 @@ def execute_command():
         return jsonify({"message": f"La commande a été executée, les resultats seront disponibles dans {log_file_path}. l'utilisateur peut demander les résultats rapidement"}), 202
 
 if __name__ == '__main__':
-	print_banner('GPTSPLOIT')
-	print("By Genepix\n\n")
-	app.run(debug=True, host='0.0.0.0')
+    print_banner('GPTSPLOIT')
+    print("By Genepix\n\n")
+    app.run(debug=True, host='0.0.0.0')
